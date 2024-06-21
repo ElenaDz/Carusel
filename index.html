@@ -2,9 +2,37 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Карусель</title>
+    <link rel="stylesheet" href="css/main.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 maximum-scale=1.0, user-scalable=no">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+          rel="stylesheet">
 </head>
 <body>
+    <div class="b_carousel">
+        <button class="previous" data-offset="left"> < </button>
+
+        <div class="inner_carousel">
+        <div class="item"><h3>1</h3></div>
+        <div class="item"><h3>2</h3></div>
+        <div class="item"><h3>3</h3></div>
+        </div>
+
+        <button class="next" data-offset="right"> > </button>
+
+        <div class="wrap_pagination">
+        <button class="pagination" data-position="1"></button>
+        <button class="pagination" data-position="2"></button>
+        <button class="pagination" data-position="3"></button>
+        </div>
+    </div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+            integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 </body>
 </html>
