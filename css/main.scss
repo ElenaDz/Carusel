@@ -18,15 +18,16 @@ button {
   width: 300px;
   height: 200px;
   position: relative;
+  overflow: hidden;
 
-  .wrap_pagination {
+  .pagination {
     display: flex;
     position: absolute;
     bottom: 15px;
     width: 100%;
     justify-content: space-around;
 
-    .pagination {
+    .set_position {
       min-width: 10px;
       height: 10px;
       background-color: black;
