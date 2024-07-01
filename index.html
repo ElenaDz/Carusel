@@ -11,28 +11,23 @@
           rel="stylesheet">
 </head>
 <body>
-    <div class="b_carousel">
-        <button class="previous move_position" data-offset="left"> < </button>
+    <div class="b_carousel" data-active_position="">
 
         <div class="inner_carousel">
-        <div class="item"><h3>1</h3></div>
-        <div class="item"><h3>2</h3></div>
-        <div class="item"><h3>3</h3></div>
+            <div class="item" data-index="0"><h3>1</h3></div>
+            <div class="item" data-index="1"><h3>2</h3></div>
+            <div class="item" data-index="2"><h3>3</h3></div>
         </div>
 
-        <button class="next move_position" data-offset="right"> > </button>
-
-        <div class="pagination">
-        <button class="set_position" data-position="1"></button>
-        <button class="set_position" data-position="2"></button>
-        <button class="set_position" data-position="3"></button>
-        </div>
+        <div class="pagination"></div>
     </div>
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
             integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="Item.js"></script>
+    <script src="ListSetPosition.js"></script>
     <script src="ButtonMovePosition.js"></script>
     <script src="ButtonSetPosition.js"></script>
     <script src="Carousel.js"></script>
