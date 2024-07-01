@@ -167,7 +167,7 @@ class Carousel {
         {
             if (index ===  0) {
                 item.$context.addClass('active');
-
+                // com
                 this.$context.data('active_position', index);
             }
             item.$context.data('index', index);
