@@ -26,7 +26,6 @@ class Item
     }
 
     /**
-     *
      * @param {JQuery} $context
      * @returns {Item[]}
      */
@@ -36,7 +35,7 @@ class Item
         $items.each((index, element) => {
             let $item = $(element);
             items.push(new Item($item));
-        })
+        });
         return items;
     }
 }

@@ -1,7 +1,10 @@
 class Carousel {
 
-    static  EVENT_UPDATE_POSITION = 'Carousel.EVENT_UPDATE_POSITION';
-    static offset_position = 300;
+    static EVENT_UPDATE_POSITION = 'Carousel.EVENT_UPDATE_POSITION';
+
+    // fixme люди которые будут использовать нашу библиотеку могут захотеть сделать карусель любых размеров, ты не можешь здесь использовать точные размеры,
+    // ты должна получать ширину карусели программно
+    static OFFSET_POSITION = 300;
 
     /**
      * @param {JQuery} $context
@@ -12,7 +15,7 @@ class Carousel {
 
         this.setActiveIndexItem(this.$context);
 
-        this.builderMovePosition()
+        this.builderMovePosition();
 
         this.list_set_position = ListSetPosition.create(this.$context);
 
@@ -41,7 +44,7 @@ class Carousel {
                 this.position = this.changePosition();
 
                 $('body').trigger(Carousel.EVENT_UPDATE_POSITION);
-            })
+            });
 
             element.$context.on(ButtonMovePosition.EVENT_OFFSET_POSITION_RIGHT, () =>
             {
@@ -59,7 +62,7 @@ class Carousel {
                 this.position = this.changePosition();
 
                 $('body').trigger(Carousel.EVENT_UPDATE_POSITION);
-            })
+            });
         });
 
 
@@ -85,7 +88,7 @@ class Carousel {
                     this.position = -(button_set_position.position * Carousel.offset_position);
                 })
             })
-        })
+        });
 
         $('body').on(Carousel.EVENT_UPDATE_POSITION,() =>
         {
@@ -130,11 +133,12 @@ class Carousel {
         return this.$context.data('active_position');
     }
 
-    set  activePosition(active_position)
+    set activePosition(active_position)
     {
         this.$context.data('active_position', active_position);
     }
 
+    // fixme удалить, карусель не disabled это относиться к кнопкам у которых есть свои классы
     removeDisabled(class_name)
     {
         this.$context.find(class_name).removeAttr("disabled");
@@ -174,21 +178,28 @@ class Carousel {
         })
     }
 
+    // fixme не коректное название метода это не смена позиции это конвертация позиции в смещение можно назватьт getOffsetFromPosition
     changePosition()
     {
         return -(this.position * Carousel.offset_position);
     }
-    // позиция css возвращает px
+
+
+    // fixme здесь у тебя возвращется позиция а именно число от 0 до 2х и это правильно
+    // fixme ты решила хранить позицию в 2х местах в data атрибуте и в смеещении left и тут же ошиблась, не удивительно выбор хранить что то в 2х местах почти всегода не правильный
+    // подумай над тем чтобы хранить это в одно месте а именно в смещении left из него ведь всегда можно получить позицию путем не сложных расчетов
     get position()
     {
        return this.$context.data('active_position');
     }
 
+    // fixme а здесь ты передаешь количество пикселей что совсем не явлеяет позицией и это совсем не правильно здесь должно быть тоже числое от 0 до 2х
     set position(position)
     {
         this.$context.find('.inner_carousel').css('left', position + 'px');
     }
 
+    // fixme контекстом здесь является корневой тег карусели для нашего примерал это div.your-class значения по умолчанию здесь нет так как мы не знаем какой класс будет у карусели
     /**
      * @param {JQuery} $context
      * @return Carousel
