@@ -12,39 +12,23 @@
 </head>
 <body>
 
-    <!-- fixme мы пишем библиотеку для других людей они могут захотет использовать другое имя класса поэтому имя класса нужно передавать через метод create
-    Как тогда применять стили если мы не знаем какой будет класс? Класс который ты знаешь например b_carousel ты добавишь программно -->
-    <!-- fixme data-active_position удалить см ниже почему -->
-    <div class="b_carousel" data-active_position="">
-
-        <!-- fixme удалить оберку, если она нужна добавь ее программно, см ниже почему -->
-        <div class="inner_carousel">
-            <!-- fixme удалить class="item" data-index="X" см ниже почему-->
-            <div class="item" data-index="0"><h3>1</h3></div>
-            <div class="item" data-index="1"><h3>2</h3></div>
-            <div class="item" data-index="2"><h3>3</h3></div>
-        </div>
-
-        <!-- fixme удалить строку см ниже почему -->
-        <div class="pagination"></div>
+    <div class="b_carousel">
+            <div><h3>1</h3></div>
+            <div><h3>2</h3></div>
+            <div><h3>3</h3></div>
     </div>
-    <!-- fixme html должен на 100% совпадать с тем что показан в примере https://kenwheeler.github.io/slick/ под строкй Set up your HTML markup.
-    кроме контента котнет может быть любой Мы пишем библиотеку для других людей нельзя засвтявлять писмать их html который ЕМ не нужен, он нужен только ТЕБЕ -->
-
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
             integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="Item.js"></script>
+    <script src="ListItems.js"></script>
     <script src="ListSetPosition.js"></script>
     <script src="ButtonMovePosition.js"></script>
     <script src="ButtonSetPosition.js"></script>
     <script src="Carousel.js"></script>
     <script>
-        let carousel = Carousel.create();
-
-        // fixme не приводит к тому чтобы карусель перематывалась на 3 слайд
-        carousel.position = 2;
+        let carousel = Carousel.create('.b_carousel');
     </script>
 
 </body>

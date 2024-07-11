@@ -13,6 +13,25 @@ class ListSetPosition {
         this.$context.append(ButtonSetPosition.getTemplate(index));
     }
 
+    changeActiveSetPosition(active_position)
+    {
+        this.$context.find('.set_position.active').removeClass('active');
+
+        this.$context.find(`[data-position=${active_position}]`).addClass('active');
+    }
+
+    getActivePosition()
+    {
+        return this.$context.find('.active').data('position');
+    }
+
+    static getTemplatePaginate()
+    {
+        return `
+                <div class="pagination"></div>
+        `;
+    }
+
     /**
      * @param {JQuery} $context
      * @return ListSetPosition

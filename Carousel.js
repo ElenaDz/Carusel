@@ -1,36 +1,37 @@
 class Carousel {
 
-    static EVENT_UPDATE_POSITION = 'Carousel.EVENT_UPDATE_POSITION';
-
     // fixme люди которые будут использовать нашу библиотеку могут захотеть сделать карусель любых размеров, ты не можешь здесь использовать точные размеры,
-    // ты должна получать ширину карусели программно
-    static OFFSET_POSITION = 300;
+    // ты должна получать ширину карусели программно ok
+
 
     /**
      * @param {JQuery} $context
      */
-    constructor($context)
+    constructor($context )
     {
         this.$context = $context;
 
-        this.setActiveIndexItem(this.$context);
+        this.builderItems()
+
+        this.list_items = ListItems.create(this.$context)
 
         this.builderMovePosition();
 
-        this.list_set_position = ListSetPosition.create(this.$context);
+
+        this.width_item = this.list_items.getWidthItem();
 
         this.builderSetPosition();
 
         this.button_set_position = ButtonSetPosition.create(this.$context);
         this.button_move_position = ButtonMovePosition.create(this.$context);
 
-        this.changeActiveSetPosition();
+        this.list_set_position.changeActiveSetPosition(0);
 
         this.button_move_position.forEach((element) =>
         {
-            element.$context.on(ButtonMovePosition.EVENT_OFFSET_POSITION_LEFT, () =>
+            element.$context.on(ButtonMovePosition.EVENT_OFFSET_POSITION_LEFT, (button) =>
             {
-                this.removeDisabled('.next');
+                element.removeDisabled();
 
                 let current_position = this.getNextPosition();
 
@@ -39,16 +40,14 @@ class Carousel {
                     return;
                 }
 
-                this.changeClassActive(current_position);
+                this.list_set_position.changeActiveSetPosition(current_position)
 
-                this.position = this.changePosition();
-
-                $('body').trigger(Carousel.EVENT_UPDATE_POSITION);
+                this.position = this.getOffsetForSetPosition(current_position);
             });
 
             element.$context.on(ButtonMovePosition.EVENT_OFFSET_POSITION_RIGHT, () =>
             {
-                this.removeDisabled('.previous');
+                element.removeDisabled();
 
                 let current_position = this.getPreviousPosition();
 
@@ -56,12 +55,9 @@ class Carousel {
                     element.disabledButton();
                     return;
                 }
+                this.list_set_position.changeActiveSetPosition(current_position)
 
-                this.changeClassActive(current_position);
-
-                this.position = this.changePosition();
-
-                $('body').trigger(Carousel.EVENT_UPDATE_POSITION);
+                this.position = this.getOffsetForSetPosition(current_position);
             });
         });
 
@@ -70,7 +66,8 @@ class Carousel {
         {
             button_set_position.$context.on(ButtonSetPosition.SELECT_POSITION, () =>
             {
-                this.activePosition = button_set_position.position;
+                let activePosition = button_set_position.position;
+
 
                 this.button_set_position.map((value) =>
                 {
@@ -79,39 +76,45 @@ class Carousel {
 
                 button_set_position.addActive();
 
-                this.removeClassActiveItem();
-
                 this.items.forEach((item) =>
                 {
-                    item.setActive(button_set_position.position);
-
-                    this.position = -(button_set_position.position * Carousel.offset_position);
+                    this.position = this.getOffsetForSetPosition(activePosition);
                 })
+
+                this.list_set_position.changeActiveSetPosition(activePosition);
             })
         });
+    }
 
-        $('body').on(Carousel.EVENT_UPDATE_POSITION,() =>
+    builderItems()
+    {
+        this.items = Item.create(this.$context);
+        this.$context.append(this.getTemplateInnerCarousel());
+        let listItems =  ListItems.create(this.$context)
+        this.items.forEach((item, index) =>
         {
-            this.changeActiveSetPosition();
+            listItems.builder(item)
         })
     }
-
-    removeClassActiveItem()
-    {
-        this.items.map((value) =>
-        {
-            value.removeClassActive();
-        });
-    }
-
     
 
     builderSetPosition()
     {
+        this.$context.append(ListSetPosition.getTemplatePaginate)
+
+        this.list_set_position = ListSetPosition.create(this.$context);
+
         this.items.forEach((item, index) =>
         {
             this.list_set_position.builder(index);
         })
+    }
+
+    getTemplateInnerCarousel()
+    {
+        return `
+                <div class="inner_carousel"></div>
+        `;
     }
     builderMovePosition()
     {
@@ -120,78 +123,25 @@ class Carousel {
 
     getNextPosition()
     {
-        return this.activePosition - 1;
+        return this.list_set_position.getActivePosition() - 1;
     }
 
     getPreviousPosition()
     {
-        return this.activePosition + 1;
+        return this.list_set_position.getActivePosition() + 1;
     }
 
-    get activePosition()
+    // fixme удалить, карусель не disabled это относиться к кнопкам у которых есть свои классы ok
+
+    // fixme не коректное название метода это не смена позиции это конвертация позиции в смещение можно назватьт getOffsetFromPosition ok
+    getOffsetForSetPosition(current_position)
     {
-        return this.$context.data('active_position');
+        return -(current_position * parseInt(this.width_item));
     }
-
-    set activePosition(active_position)
-    {
-        this.$context.data('active_position', active_position);
-    }
-
-    // fixme удалить, карусель не disabled это относиться к кнопкам у которых есть свои классы
-    removeDisabled(class_name)
-    {
-        this.$context.find(class_name).removeAttr("disabled");
-    }
-
-    changeClassActive(active_position)
-    {
-        this.$context.find('.item.active').removeClass('active');
-
-        this.$context.find(`[data-index=${active_position}]`).addClass('active');
-
-        this.$context.data('active_position', active_position);
-    }
-
-    changeActiveSetPosition()
-    {
-            this.$context.find('.set_position.active').removeClass('active');
-
-            let active_position = this.$context.data('active_position');
-
-            this.$context.find(`[data-position=${active_position}]`).addClass('active');
-    }
-
-
-    setActiveIndexItem($context)
-    {
-        this.items = Item.create($context);
-
-        this.items.forEach((item, index) =>
-        {
-            if (index ===  0) {
-                item.$context.addClass('active');
-                // com
-                this.$context.data('active_position', index);
-            }
-            item.$context.data('index', index);
-        })
-    }
-
-    // fixme не коректное название метода это не смена позиции это конвертация позиции в смещение можно назватьт getOffsetFromPosition
-    changePosition()
-    {
-        return -(this.position * Carousel.offset_position);
-    }
-
 
     // fixme здесь у тебя возвращется позиция а именно число от 0 до 2х и это правильно
     // fixme ты решила хранить позицию в 2х местах в data атрибуте и в смеещении left и тут же ошиблась, не удивительно выбор хранить что то в 2х местах почти всегода не правильный
     // подумай над тем чтобы хранить это в одно месте а именно в смещении left из него ведь всегда можно получить позицию путем не сложных расчетов
-    get position()
-    {
-       return this.$context.data('active_position');
-    }
 
     // fixme а здесь ты передаешь количество пикселей что совсем не явлеяет позицией и это совсем не правильно здесь должно быть тоже числое от 0 до 2х
     set position(position)
@@ -199,13 +149,14 @@ class Carousel {
         this.$context.find('.inner_carousel').css('left', position + 'px');
     }
 
-    // fixme контекстом здесь является корневой тег карусели для нашего примерал это div.your-class значения по умолчанию здесь нет так как мы не знаем какой класс будет у карусели
+    // fixme контекстом здесь является корневой тег карусели для нашего примерал это div.your-class значения по умолчанию здесь нет так как мы не знаем какой класс будет у карусели ok
     /**
-     * @param {JQuery} $context
+     * @param {string} class_name
      * @return Carousel
      */
-    static create($context = $('body'))
+    static create(class_name)
     {
-        return new Carousel($context.find('.b_carousel'));
+        let $context = $(class_name)
+        return new Carousel($context);
     }
 }

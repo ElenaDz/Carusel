@@ -8,21 +8,10 @@ class Item
         this.$context = $context;
     }
 
-    get index()
+    getTemplate()
     {
-        return this.$context.data('index');
-    }
-
-    setActive(position)
-    {
-        if (this.index === position) {
-            this.$context.addClass('active');
-        }
-    }
-
-    removeClassActive()
-    {
-       this.$context.removeClass('active');
+        this.$context.addClass('item')
+        return this.$context
     }
 
     /**
@@ -30,7 +19,7 @@ class Item
      * @returns {Item[]}
      */
     static create($context) {
-        let $items = $context.find('.item');
+        let $items = $context.children();
         let items = [];
         $items.each((index, element) => {
             let $item = $(element);

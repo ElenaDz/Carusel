@@ -36,6 +36,11 @@ class ButtonMovePosition
         this.$context.prop('disabled', true);
     }
 
+    removeDisabled()
+    {
+        this.$context.siblings().removeAttr("disabled");
+    }
+
     /**
      *
      * @param {jQuery} $context
