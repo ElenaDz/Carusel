@@ -10,8 +10,8 @@ class Item
 
     getTemplate()
     {
-        this.$context.addClass('item')
-        return this.$context
+        this.$context.addClass('item');
+        return this.$context;
     }
 
     /**

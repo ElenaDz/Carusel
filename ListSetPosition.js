@@ -32,6 +32,11 @@ class ListSetPosition {
         `;
     }
 
+    removeClassActive()
+    {
+        this.$context.find('.set_position.active').removeClass('active');
+    }
+
     /**
      * @param {JQuery} $context
      * @return ListSetPosition

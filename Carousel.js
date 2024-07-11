@@ -11,12 +11,11 @@ class Carousel {
     {
         this.$context = $context;
 
-        this.builderItems()
+        this.builderItems();
 
-        this.list_items = ListItems.create(this.$context)
+        this.list_items = ListItems.create(this.$context);
 
         this.builderMovePosition();
-
 
         this.width_item = this.list_items.getWidthItem();
 
@@ -40,7 +39,7 @@ class Carousel {
                     return;
                 }
 
-                this.list_set_position.changeActiveSetPosition(current_position)
+                this.list_set_position.changeActiveSetPosition(current_position);
 
                 this.position = this.getOffsetForSetPosition(current_position);
             });
@@ -55,7 +54,7 @@ class Carousel {
                     element.disabledButton();
                     return;
                 }
-                this.list_set_position.changeActiveSetPosition(current_position)
+                this.list_set_position.changeActiveSetPosition(current_position);
 
                 this.position = this.getOffsetForSetPosition(current_position);
             });
@@ -68,11 +67,7 @@ class Carousel {
             {
                 let activePosition = button_set_position.position;
 
-
-                this.button_set_position.map((value) =>
-                {
-                    value.removeClassActive()
-                });
+                this.list_set_position.removeClassActive();
 
                 button_set_position.addActive();
 
@@ -90,17 +85,17 @@ class Carousel {
     {
         this.items = Item.create(this.$context);
         this.$context.append(this.getTemplateInnerCarousel());
-        let listItems =  ListItems.create(this.$context)
+        let listItems =  ListItems.create(this.$context);
         this.items.forEach((item, index) =>
         {
-            listItems.builder(item)
+            listItems.builder(item);
         })
     }
     
 
     builderSetPosition()
     {
-        this.$context.append(ListSetPosition.getTemplatePaginate)
+        this.$context.append(ListSetPosition.getTemplatePaginate);
 
         this.list_set_position = ListSetPosition.create(this.$context);
 
