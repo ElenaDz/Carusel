@@ -13,10 +13,11 @@ class ButtonSetPosition
         });
     }
 
+    // fixme зачем тебе второе имя для position, одна вещь - одно имя, не исполуй index
     static getTemplate(index)
     {
         return `
-                <button class="set_position" data-position=${index}></button>
+            <button class="set_position" data-position=${index}></button>
         `;
     }
 
@@ -45,7 +46,7 @@ class ButtonSetPosition
         $buttons.each((index, element) => {
             let $button = $(element);
             buttons.push(new ButtonSetPosition($button));
-        })
+        });
         return buttons;
     }
 }

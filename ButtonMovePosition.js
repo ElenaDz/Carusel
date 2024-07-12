@@ -25,6 +25,7 @@ class ButtonMovePosition
 
     static getTemplate()
     {
+        // fixme общие имена классов должны идти первыми, отличающиеся после
         return `
             <button class="previous move_position" data-offset="left"> < </button>
             <button class="next move_position" data-offset="right"> > </button>
@@ -52,7 +53,7 @@ class ButtonMovePosition
         $buttons.each((index, element) => {
             let $button = $(element);
             buttons.push(new ButtonMovePosition($button));
-        })
+        });
         return buttons;
     }
 }

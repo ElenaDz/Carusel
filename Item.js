@@ -8,6 +8,7 @@ class Item
         this.$context = $context;
     }
 
+
     getTemplate()
     {
         this.$context.addClass('item');

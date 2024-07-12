@@ -5,9 +5,11 @@ class ListItems {
     constructor($context)
     {
         this.$context = $context;
-
     }
 
+    /**
+     * @param {Item} Item
+     */
     builder(Item)
     {
         this.$context.append(Item.getTemplate());
@@ -15,7 +17,8 @@ class ListItems {
 
     getWidthItem()
     {
-       return  this.$context.find('.item').first().css('width');
+        // fixme у jquery есть функцию width
+        return this.$context.find('.item').first().css('width');
     }
 
     /**

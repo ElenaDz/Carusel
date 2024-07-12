@@ -1,14 +1,11 @@
-class Carousel {
-
-    // fixme люди которые будут использовать нашу библиотеку могут захотеть сделать карусель любых размеров, ты не можешь здесь использовать точные размеры,
-    // ты должна получать ширину карусели программно ok
-
-
+class Carousel
+{
     /**
      * @param {JQuery} $context
      */
     constructor($context )
     {
+        // fixme не явное объявление свойства класса, обяъви его явно и все другие свойства во всех классах
         this.$context = $context;
 
         this.builderItems();
@@ -17,6 +14,8 @@ class Carousel {
 
         this.builderMovePosition();
 
+        // fixme нет смысла выносить это в свойство класса, ты усложняешь объект без необходимости, объект это список
+        // свойств класса и его методов, чем меньше их тем проще объект, чем проще - тем лучше, избався от этого свойства
         this.width_item = this.list_items.getWidthItem();
 
         this.builderSetPosition();
@@ -74,18 +73,27 @@ class Carousel {
                 this.items.forEach((item) =>
                 {
                     this.position = this.getOffsetForSetPosition(activePosition);
-                })
+                });
 
                 this.list_set_position.changeActiveSetPosition(activePosition);
             })
         });
     }
 
+    // fixme имя метода это глагол, отвечат на вопрос что делать, у тебя builder (строитель) существительно видимо нужно build
+    // исправь везде подобную ошибку
+    // fixme кучу времени потратил чтобы понять что делает этот метод, а оказалось он не нужен, все что он делает это оборачивает
+    // items в inner_carousel, это можно сделать одной строчкой с помощью jquery функции wrap, замени это на одну строчку,
+    // и избавься от всего что ты написала ради этой задачи, но больше не нужно, например Item
     builderItems()
     {
         this.items = Item.create(this.$context);
+
         this.$context.append(this.getTemplateInnerCarousel());
-        let listItems =  ListItems.create(this.$context);
+
+        let listItems = ListItems.create(this.$context);
+
+        // fixme не указан тип item, не работает поиск Ide, это не допустимо
         this.items.forEach((item, index) =>
         {
             listItems.builder(item);
@@ -95,6 +103,7 @@ class Carousel {
 
     builderSetPosition()
     {
+        // fixme чтобы вызвать функцию нужно двойные скобки написать не вижу тут их почему то, исправь или напишиу почему их нет
         this.$context.append(ListSetPosition.getTemplatePaginate);
 
         this.list_set_position = ListSetPosition.create(this.$context);
@@ -108,9 +117,10 @@ class Carousel {
     getTemplateInnerCarousel()
     {
         return `
-                <div class="inner_carousel"></div>
+            <div class="inner_carousel"></div>
         `;
     }
+
     builderMovePosition()
     {
         this.$context.append(ButtonMovePosition.getTemplate());
@@ -126,32 +136,29 @@ class Carousel {
         return this.list_set_position.getActivePosition() + 1;
     }
 
-    // fixme удалить, карусель не disabled это относиться к кнопкам у которых есть свои классы ok
-
-    // fixme не коректное название метода это не смена позиции это конвертация позиции в смещение можно назватьт getOffsetFromPosition ok
+    // fixme убрать слово set из имя фукнции так как оно ни чего не значит
+    // fixme убрать слово current из имени параметра так как оно не только для текущей позиции а для любой
     getOffsetForSetPosition(current_position)
     {
         return -(current_position * parseInt(this.width_item));
     }
 
-    // fixme здесь у тебя возвращется позиция а именно число от 0 до 2х и это правильно
-    // fixme ты решила хранить позицию в 2х местах в data атрибуте и в смеещении left и тут же ошиблась, не удивительно выбор хранить что то в 2х местах почти всегода не правильный
-    // подумай над тем чтобы хранить это в одно месте а именно в смещении left из него ведь всегда можно получить позицию путем не сложных расчетов
-
-    // fixme а здесь ты передаешь количество пикселей что совсем не явлеяет позицией и это совсем не правильно здесь должно быть тоже числое от 0 до 2х
+    // fixme а здесь ты передаешь количество пикселей что совсем не явлеяет позицией и это совсем не правильно
+    // здесь должно быть тоже числое от 0 до 2
     set position(position)
     {
         this.$context.find('.inner_carousel').css('left', position + 'px');
     }
 
-    // fixme контекстом здесь является корневой тег карусели для нашего примерал это div.your-class значения по умолчанию здесь нет так как мы не знаем какой класс будет у карусели ok
+
     /**
      * @param {string} class_name
      * @return Carousel
      */
     static create(class_name)
     {
-        let $context = $(class_name)
+        let $context = $(class_name);
+
         return new Carousel($context);
     }
 }

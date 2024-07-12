@@ -28,7 +28,7 @@ class ListSetPosition {
     static getTemplatePaginate()
     {
         return `
-                <div class="pagination"></div>
+            <div class="pagination"></div>
         `;
     }
 
