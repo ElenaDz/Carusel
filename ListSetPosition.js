@@ -1,28 +1,47 @@
 class ListSetPosition {
 
-    /**
-     * @param {JQuery} $context
-     */
+    /** @type {JQuery} $context */
+    $context;
+
     constructor($context)
     {
         this.$context = $context;
     }
+
+
+    offsetPosition()
+    {
+       let buttons_set_position = ButtonSetPosition.create(this.$context);
+
+        buttons_set_position.forEach((button_set_position) =>
+        {
+            button_set_position.$context.on(ButtonSetPosition.SELECT_POSITION, () =>
+            {
+                let active_position = button_set_position.position;
+
+                this.removeClassActive();
+
+                button_set_position.addActive();
+
+                this.$context.parent().data('position', active_position);
+
+                this.$context.trigger(ListMovePosition.EVENT_UPDATE_CAROUSEL);
+            });
+        });
+    }
+
+
 
     builder(index)
     {
         this.$context.append(ButtonSetPosition.getTemplate(index));
     }
 
-    changeActiveSetPosition(active_position)
+    changeActiveSetPosition(active_position = 0)
     {
         this.$context.find('.set_position.active').removeClass('active');
 
         this.$context.find(`[data-position=${active_position}]`).addClass('active');
-    }
-
-    getActivePosition()
-    {
-        return this.$context.find('.active').data('position');
     }
 
     static getTemplatePaginate()

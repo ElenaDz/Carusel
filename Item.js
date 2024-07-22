@@ -1,19 +1,14 @@
 class Item
 {
-    /**
-     * @param {JQuery} $context
-     */
+    /** @type {JQuery} $context */
+    $context;
+
     constructor($context)
     {
         this.$context = $context;
-    }
-
-
-    getTemplate()
-    {
         this.$context.addClass('item');
-        return this.$context;
     }
+
 
     /**
      * @param {JQuery} $context

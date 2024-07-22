@@ -1,9 +1,10 @@
 class ButtonSetPosition
 {
     static SELECT_POSITION = 'ButtonSetPosition.SELECT_POSITION';
-    /**
-     * @param {JQuery}$context
-     */
+
+    /** @type {JQuery} $context */
+    $context;
+
     constructor($context) {
         this.$context = $context;
 
@@ -13,21 +14,17 @@ class ButtonSetPosition
         });
     }
 
-    // fixme зачем тебе второе имя для position, одна вещь - одно имя, не исполуй index
-    static getTemplate(index)
+    // fixme зачем тебе второе имя для position, одна вещь - одно имя, не исполуй index ok
+    static getTemplate(position)
     {
         return `
-            <button class="set_position" data-position=${index}></button>
+            <button class="set_position" data-position=${position}></button>
         `;
     }
 
     addActive()
     {
         this.$context.addClass('active');
-    }
-    removeClassActive()
-    {
-        this.$context.removeClass('active');
     }
 
     get position()

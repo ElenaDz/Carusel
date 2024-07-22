@@ -4,12 +4,16 @@ class ButtonMovePosition
     static EVENT_OFFSET_POSITION_RIGHT = 'ButtonMovePosition.EVENT_OFFSET_POSITION_RIGHT';
 
 
-    /**
-     * @param {JQuery}$context
-     */
+    /** @type {JQuery} $context */
+    $context;
+
     constructor($context) {
 
         this.$context = $context;
+
+        if (this.$context[0].ButtonMovePosition) return;
+
+        this.$context[0].ButtonMovePosition = this;
 
         this.$context.on('click', (button) =>
         {
@@ -25,10 +29,10 @@ class ButtonMovePosition
 
     static getTemplate()
     {
-        // fixme общие имена классов должны идти первыми, отличающиеся после
+        // fixme общие имена классов должны идти первыми, отличающиеся после ок
         return `
-            <button class="previous move_position" data-offset="left"> < </button>
-            <button class="next move_position" data-offset="right"> > </button>
+            <button class="move_position previous " data-offset="left"> < </button>
+            <button class="move_position next " data-offset="right"> > </button>
         `;
     }
 

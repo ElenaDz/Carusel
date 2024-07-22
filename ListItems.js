@@ -7,18 +7,15 @@ class ListItems {
         this.$context = $context;
     }
 
-    /**
-     * @param {Item} Item
-     */
-    builder(Item)
-    {
-        this.$context.append(Item.getTemplate());
-    }
-
     getWidthItem()
     {
-        // fixme у jquery есть функцию width
-        return this.$context.find('.item').first().css('width');
+        // fixme у jquery есть функцию width ok
+        return this.$context.find('.item').first().width() + 2;
+    }
+
+    getCountItems()
+    {
+        return this.$context.find('.item').length - 1;
     }
 
     /**

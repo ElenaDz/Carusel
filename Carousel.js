@@ -1,124 +1,77 @@
 class Carousel
 {
-    /**
-     * @param {JQuery} $context
-     */
-    constructor($context )
+    /** @type {JQuery} $context */
+    $context;
+
+    /** @type {ListItems} $context */
+    list_items;
+
+    /** @type {ButtonSetPosition} $context */
+    button_set_position;
+
+    /** @type {ButtonMovePosition} $context */
+    button_move_position;
+
+    /** @type {ListSetPosition} $context */
+    list_set_position;
+
+    constructor($context)
     {
-        // fixme не явное объявление свойства класса, обяъви его явно и все другие свойства во всех классах
+        // fixme не явное объявление свойства класса, обяъви его явно и все другие свойства во всех классах ok
         this.$context = $context;
 
-        this.builderItems();
+        this.$context.addClass('b_carousel');
+
+        this.wrapItems();
 
         this.list_items = ListItems.create(this.$context);
 
         this.builderMovePosition();
 
-        // fixme нет смысла выносить это в свойство класса, ты усложняешь объект без необходимости, объект это список
-        // свойств класса и его методов, чем меньше их тем проще объект, чем проще - тем лучше, избався от этого свойства
-        this.width_item = this.list_items.getWidthItem();
+        // fixme нет смысла выносить это в свойство класса, ты усложняешь объект без необходимости, объект это список ok
+        // свойств класса и его методов, чем меньше их тем проще объект, чем проще - тем лучше, избався от этого свойства ok
 
         this.builderSetPosition();
 
         this.button_set_position = ButtonSetPosition.create(this.$context);
         this.button_move_position = ButtonMovePosition.create(this.$context);
+        this.list_move_position = ListMovePosition.create(this.$context);
 
-        this.list_set_position.changeActiveSetPosition(0);
+        this.position = 0;
 
-        this.button_move_position.forEach((element) =>
+        this.list_move_position.offsetPosition(this.list_items.getCountItems());
+
+        this.$context.on(ListMovePosition.EVENT_UPDATE_CAROUSEL, () =>
         {
-            element.$context.on(ButtonMovePosition.EVENT_OFFSET_POSITION_LEFT, (button) =>
-            {
-                element.removeDisabled();
-
-                let current_position = this.getNextPosition();
-
-                if (current_position < 0) {
-                    element.disabledButton();
-                    return;
-                }
-
-                this.list_set_position.changeActiveSetPosition(current_position);
-
-                this.position = this.getOffsetForSetPosition(current_position);
-            });
-
-            element.$context.on(ButtonMovePosition.EVENT_OFFSET_POSITION_RIGHT, () =>
-            {
-                element.removeDisabled();
-
-                let current_position = this.getPreviousPosition();
-
-                if (current_position ===  this.items.length) {
-                    element.disabledButton();
-                    return;
-                }
-                this.list_set_position.changeActiveSetPosition(current_position);
-
-                this.position = this.getOffsetForSetPosition(current_position);
-            });
+            this.position = this.$context.data('position');
         });
 
-
-        this.button_set_position.forEach((button_set_position) =>
-        {
-            button_set_position.$context.on(ButtonSetPosition.SELECT_POSITION, () =>
-            {
-                let activePosition = button_set_position.position;
-
-                this.list_set_position.removeClassActive();
-
-                button_set_position.addActive();
-
-                this.items.forEach((item) =>
-                {
-                    this.position = this.getOffsetForSetPosition(activePosition);
-                });
-
-                this.list_set_position.changeActiveSetPosition(activePosition);
-            })
-        });
+        this.list_set_position.offsetPosition();
     }
 
-    // fixme имя метода это глагол, отвечат на вопрос что делать, у тебя builder (строитель) существительно видимо нужно build
+    // fixme имя метода это глагол, отвечат на вопрос что делать, у тебя builder (строитель) существительно видимо нужно build ok
     // исправь везде подобную ошибку
-    // fixme кучу времени потратил чтобы понять что делает этот метод, а оказалось он не нужен, все что он делает это оборачивает
+    // fixme кучу времени потратил чтобы понять что делает этот метод, а оказалось он не нужен, все что он делает это оборачивает  ok
     // items в inner_carousel, это можно сделать одной строчкой с помощью jquery функции wrap, замени это на одну строчку,
-    // и избавься от всего что ты написала ради этой задачи, но больше не нужно, например Item
-    builderItems()
+    // и избавься от всего что ты написала ради этой задачи, оно больше не нужно, например Item
+    wrapItems()
     {
         this.items = Item.create(this.$context);
 
-        this.$context.append(this.getTemplateInnerCarousel());
-
-        let listItems = ListItems.create(this.$context);
-
-        // fixme не указан тип item, не работает поиск Ide, это не допустимо
-        this.items.forEach((item, index) =>
-        {
-            listItems.builder(item);
-        })
+        this.$context.children().wrapAll('<div class="inner_carousel"></div>');
     }
-    
 
     builderSetPosition()
     {
-        // fixme чтобы вызвать функцию нужно двойные скобки написать не вижу тут их почему то, исправь или напишиу почему их нет
-        this.$context.append(ListSetPosition.getTemplatePaginate);
+        // fixme чтобы вызвать функцию нужно двойные скобки написать не вижу тут их почему то, исправь или напишиу почему их нет ok
+        this.$context.append(ListSetPosition.getTemplatePaginate());
 
         this.list_set_position = ListSetPosition.create(this.$context);
 
         this.items.forEach((item, index) =>
         {
             this.list_set_position.builder(index);
-        })
-    }
-
-    getTemplateInnerCarousel()
-    {
-        return `
-            <div class="inner_carousel"></div>
-        `;
+        });
     }
 
     builderMovePosition()
@@ -126,28 +79,21 @@ class Carousel
         this.$context.append(ButtonMovePosition.getTemplate());
     }
 
-    getNextPosition()
-    {
-        return this.list_set_position.getActivePosition() - 1;
-    }
 
-    getPreviousPosition()
-    {
-        return this.list_set_position.getActivePosition() + 1;
-    }
+    // fixme убрать слово set из имя фукнции так как оно ни чего не значит ok
+    // fixme убрать слово current из имени параметра так как оно не только для текущей позиции а для любой ok
 
-    // fixme убрать слово set из имя фукнции так как оно ни чего не значит
-    // fixme убрать слово current из имени параметра так как оно не только для текущей позиции а для любой
-    getOffsetForSetPosition(current_position)
+    // fixme а здесь ты передаешь количество пикселей что совсем не явлеяет позицией и это совсем не правильно ok
+    // здесь должно быть тоже числое от 0 до 2 ok
+    set position(current_position)
     {
-        return -(current_position * parseInt(this.width_item));
-    }
+        let position = -(current_position * parseInt(this.list_items.getWidthItem()));
 
-    // fixme а здесь ты передаешь количество пикселей что совсем не явлеяет позицией и это совсем не правильно
-    // здесь должно быть тоже числое от 0 до 2
-    set position(position)
-    {
         this.$context.find('.inner_carousel').css('left', position + 'px');
+
+        this.$context.data('position', current_position);
+
+        this.list_set_position.changeActiveSetPosition(current_position);
     }
 
 
