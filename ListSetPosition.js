@@ -1,3 +1,4 @@
+// fixme нельзя называть одно и тоже разными именами то у тебя ButtonSetPosition то просто SetPosition выбири одно имя
 class ListSetPosition {
 
     /** @type {JQuery} $context */
@@ -31,7 +32,7 @@ class ListSetPosition {
     }
 
 
-
+    // fixme имя метода это глагол
     builder(index)
     {
         this.$context.append(ButtonSetPosition.getTemplate(index));

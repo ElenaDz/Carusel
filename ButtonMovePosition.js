@@ -29,18 +29,19 @@ class ButtonMovePosition
 
     static getTemplate()
     {
-        // fixme общие имена классов должны идти первыми, отличающиеся после ок
         return `
             <button class="move_position previous " data-offset="left"> < </button>
             <button class="move_position next " data-offset="right"> > </button>
         `;
     }
 
+    // fixme прилогательное а нужен глагол
     disabledButton()
     {
         this.$context.prop('disabled', true);
     }
 
+    // fixme лучше вместо этих двух методов сделай свойство disabled
     removeDisabled()
     {
         this.$context.siblings().removeAttr("disabled");

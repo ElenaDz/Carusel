@@ -6,6 +6,10 @@ class Item
     constructor($context)
     {
         this.$context = $context;
+
+        // fixme этот класс все что делает это добавляет класс item который вроде не где больше не нужен кроме как в css
+        // но и в css без него можно обойтись вместо .b_carousel .inner_carousel .item можно написать
+        // .b_carousel .inner_carousel > div и избавиться от этого класса
         this.$context.addClass('item');
     }
 

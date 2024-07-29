@@ -9,7 +9,6 @@ class ListItems {
 
     getWidthItem()
     {
-        // fixme у jquery есть функцию width ok
         return this.$context.find('.item').first().width() + 2;
     }
 

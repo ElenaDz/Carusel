@@ -14,7 +14,6 @@ class ButtonSetPosition
         });
     }
 
-    // fixme зачем тебе второе имя для position, одна вещь - одно имя, не исполуй index ok
     static getTemplate(position)
     {
         return `
@@ -22,6 +21,7 @@ class ButtonSetPosition
         `;
     }
 
+    // fixme сделай свойство с сетером active
     addActive()
     {
         this.$context.addClass('active');
