@@ -1,5 +1,5 @@
-// fixme нельзя называть одно и тоже разными именами то у тебя ButtonSetPosition то просто SetPosition выбири одно имя
-class ListSetPosition {
+// fixme нельзя называть одно и тоже разными именами то у тебя ButtonSetPosition то просто SetPosition выбири одно имя ok
+    class ListButtonSetPosition {
 
     /** @type {JQuery} $context */
     $context;
@@ -22,18 +22,19 @@ class ListSetPosition {
 
                 this.removeClassActive();
 
-                button_set_position.addActive();
+                button_set_position.active = true;
+
 
                 this.$context.parent().data('position', active_position);
 
-                this.$context.trigger(ListMovePosition.EVENT_UPDATE_CAROUSEL);
+                this.$context.trigger(ListButtonMovePosition.EVENT_UPDATE_CAROUSEL);
             });
         });
     }
 
 
-    // fixme имя метода это глагол
-    builder(index)
+    // fixme имя метода это глагол ok
+    build(index)
     {
         this.$context.append(ButtonSetPosition.getTemplate(index));
     }
@@ -59,10 +60,10 @@ class ListSetPosition {
 
     /**
      * @param {JQuery} $context
-     * @return ListSetPosition
+     * @return ListButtonSetPosition
      */
     static create($context)
     {
-        return new ListSetPosition($context.find('.pagination'));
+        return new ListButtonSetPosition($context.find('.pagination'));
     }
 }

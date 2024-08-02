@@ -193,7 +193,7 @@ interface JQueryCallback {
     disable(): JQueryCallback;
 
     /**
-     * Determine if the callbacks list has been disabled.
+     * Determine if the callbacks list has been disable.
      */
     disabled(): boolean;
 

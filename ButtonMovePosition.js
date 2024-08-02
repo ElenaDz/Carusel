@@ -7,6 +7,10 @@ class ButtonMovePosition
     /** @type {JQuery} $context */
     $context;
 
+
+    /** @type {boolean} disable */
+    disable;
+
     constructor($context) {
 
         this.$context = $context;
@@ -30,21 +34,24 @@ class ButtonMovePosition
     static getTemplate()
     {
         return `
-            <button class="move_position previous " data-offset="left"> < </button>
-            <button class="move_position next " data-offset="right"> > </button>
+                <button class="move_position previous " data-offset="left"> < </button>
+                <button class="move_position next " data-offset="right"> > </button>
         `;
     }
 
-    // fixme прилогательное а нужен глагол
-    disabledButton()
+    getOppositeButton(class_name)
     {
-        this.$context.prop('disabled', true);
+        return this.$context.siblings(class_name)[0]
     }
 
-    // fixme лучше вместо этих двух методов сделай свойство disabled
-    removeDisabled()
+
+    /**
+     *
+     * @param disable
+     */
+    set disable(disable)
     {
-        this.$context.siblings().removeAttr("disabled");
+        this.$context.prop('disable', disable);
     }
 
     /**

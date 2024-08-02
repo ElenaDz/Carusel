@@ -21,10 +21,13 @@ class ButtonSetPosition
         `;
     }
 
-    // fixme сделай свойство с сетером active
-    addActive()
+    // fixme сделай свойство с сетером active ok
+
+    set active(active)
     {
-        this.$context.addClass('active');
+        if (active === true) {
+            this.$context.addClass('active');
+        }
     }
 
     get position()
