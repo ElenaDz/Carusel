@@ -22,26 +22,29 @@ class ButtonMovePosition
         this.$context.on('click', (button) =>
         {
             if ($(button.currentTarget).data('offset') === 'left') {
-                this.$context.trigger(ButtonMovePosition.EVENT_OFFSET_POSITION_LEFT);
+                this.$context.parent().trigger(ButtonMovePosition.EVENT_OFFSET_POSITION_LEFT);
 
             } else {
-                this.$context.trigger(ButtonMovePosition.EVENT_OFFSET_POSITION_RIGHT);
+                this.$context.parent().trigger(ButtonMovePosition.EVENT_OFFSET_POSITION_RIGHT);
             }
         })
+
     }
 
 
     static getTemplate()
     {
         return `
+            <div class="wrap_move">
                 <button class="move_position previous " data-offset="left"> < </button>
                 <button class="move_position next " data-offset="right"> > </button>
+            </div>
         `;
     }
 
     getOppositeButton(class_name)
     {
-        return this.$context.siblings(class_name)[0]
+        return this.$context.siblings(class_name)[0];
     }
 
 

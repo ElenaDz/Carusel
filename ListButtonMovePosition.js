@@ -30,7 +30,7 @@ class ListButtonMovePosition {
         {
             let position =  this.$context.parent().data('position');
 
-            let button_move_position = $(button.currentTarget)[0].ButtonMovePosition;
+            let button_move_position = $(button.currentTarget).find('.previous')[0].ButtonMovePosition;
 
             let button_next = button_move_position.getOppositeButton('.next').ButtonMovePosition;
 
@@ -53,7 +53,7 @@ class ListButtonMovePosition {
         {
             let position =  this.$context.parent().data('position');
 
-            let button_move_position = $(button.currentTarget)[0].ButtonMovePosition;
+            let button_move_position = $(button.currentTarget).find('.next')[0].ButtonMovePosition;
 
             let button_prev = button_move_position.getOppositeButton('.previous').ButtonMovePosition;
 
@@ -84,6 +84,6 @@ class ListButtonMovePosition {
         // fixme два очень похожих класса ListButtonMovePosition и ListButtonSetPosition но контекст у них совсем разный, здесь у
         // тебя контекстом явлеяется все найденные элементы с таким классом, а у второго класса контектом явлеяется
         // обертка pagination Обычно у на контекст это один элемент, а здесь много, нужно сделать как везде, чтобы не путаться
-        return new ListButtonMovePosition($context.find('.move_position'), count_items);
+        return new ListButtonMovePosition($context.find('.wrap_move'), count_items);
     }
 }
