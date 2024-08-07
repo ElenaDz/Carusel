@@ -1,4 +1,4 @@
-// fixme нельзя называть одно и тоже разными именами то у тебя ButtonMovePosition то просто MovePosition выбири одно имя ok
+
 class ListButtonMovePosition {
 
     static EVENT_UPDATE_CAROUSEL = 'ListButtonMovePosition.EVENT_UPDATE_CAROUSEL';
@@ -13,8 +13,7 @@ class ListButtonMovePosition {
         this.initPosition(count_items);
     }
 
-    // fixme на сколько я понял это что то типа инициализации при создании Назови этот метод init в смысыле инициализация ok
-    // fixme почему этот метод не в констркторе вызывается? вызови его из конструктора ok
+    // fixme переминуй initMovePosition
     initPosition(count_items)
     {
         ButtonMovePosition.create(this.$context);
@@ -24,10 +23,14 @@ class ListButtonMovePosition {
         this.offsetPositionRight(count_items);
     }
 
+    // fixme переименую initMovePositionLeft
     offsetPositionLeft()
     {
         this.$context.on(ButtonMovePosition.EVENT_OFFSET_POSITION_LEFT, (button) =>
         {
+            // fixme через parent() ты обращаешься к dom элементу а так нельзя мы должны работать с объектами,
+            // их свойствами и методами Когда объект создается мы его сложм в dom в констуркторе чтобы он не создался
+            // втрой раз и чтобы те кому можно взяли там его и обратились к нему Так и сделай Ниже тоже самое исправь
             let position =  this.$context.parent().data('position');
 
             let button_move_position = $(button.currentTarget).find('.previous')[0].ButtonMovePosition;
@@ -47,6 +50,7 @@ class ListButtonMovePosition {
         });
     }
 
+    // fixme rename initMovePositionRight
     offsetPositionRight(count_items)
     {
         this.$context.on(ButtonMovePosition.EVENT_OFFSET_POSITION_RIGHT, (button) =>
@@ -59,6 +63,8 @@ class ListButtonMovePosition {
 
             button_prev.disable = false;
 
+            // fixme ты так долго передавала count_items ради это строчки? Так не пойдет У объекта Карусель должно быть
+            // свйство количество элементов вот и используй его
             if (position ===  count_items) {
                 button_move_position.disable = true;
                 return;
@@ -76,14 +82,9 @@ class ListButtonMovePosition {
      * @param $context
      * @param count_items
      * @returns {ListButtonMovePosition}
-     *
      */
     static create($context, count_items)
     {
-
-        // fixme два очень похожих класса ListButtonMovePosition и ListButtonSetPosition но контекст у них совсем разный, здесь у
-        // тебя контекстом явлеяется все найденные элементы с таким классом, а у второго класса контектом явлеяется
-        // обертка pagination Обычно у на контекст это один элемент, а здесь много, нужно сделать как везде, чтобы не путаться
         return new ListButtonMovePosition($context.find('.wrap_move'), count_items);
     }
 }

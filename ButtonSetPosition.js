@@ -21,8 +21,7 @@ class ButtonSetPosition
         `;
     }
 
-    // fixme сделай свойство с сетером active ok
-
+    // fixme а если active false передадут и класс active уже добавлен Исправь
     set active(active)
     {
         if (active === true) {

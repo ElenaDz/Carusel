@@ -8,8 +8,10 @@ class ButtonMovePosition
     $context;
 
 
+    // fixme пишет ошибка "повторное объявление" и действительно такое имя уже занято ниже есть сеттер disable Удалить
     /** @type {boolean} disable */
     disable;
+
 
     constructor($context) {
 
@@ -21,7 +23,9 @@ class ButtonMovePosition
 
         this.$context.on('click', (button) =>
         {
+            // fixme не вводи дополнительный дата атрибут ведь уже есть класс previous и next который можно исопльзовать
             if ($(button.currentTarget).data('offset') === 'left') {
+                // fixme здесь не нужно вызывать событие, здесь лучше напрямую обращаться к свойству position
                 this.$context.parent().trigger(ButtonMovePosition.EVENT_OFFSET_POSITION_LEFT);
 
             } else {
@@ -36,8 +40,8 @@ class ButtonMovePosition
     {
         return `
             <div class="wrap_move">
-                <button class="move_position previous " data-offset="left"> < </button>
-                <button class="move_position next " data-offset="right"> > </button>
+                <button class="move_position previous" data-offset="left"> < </button>
+                <button class="move_position next" data-offset="right"> > </button>
             </div>
         `;
     }
