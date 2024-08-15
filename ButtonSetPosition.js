@@ -1,16 +1,30 @@
 class ButtonSetPosition
 {
-    static SELECT_POSITION = 'ButtonSetPosition.SELECT_POSITION';
-
     /** @type {JQuery} $context */
     $context;
+
+    /** @type {Carousel} carousel */
+    carousel;
 
     constructor($context) {
         this.$context = $context;
 
+        if (this.$context[0].ButtonSetPosition) return;
+
+        this.$context[0].ButtonSetPosition = this;
+
+        this.carousel = Carousel.create();
+
         this.$context.on('click', (button) =>
         {
-            this.$context.trigger(ButtonSetPosition.SELECT_POSITION);
+            let active_position = this.position;
+
+            this.active = false;
+
+            button.active = true;
+
+            // fixme разботай через обращение к свойствам объектов на не dom ok
+            this.carousel.position = active_position;
         });
     }
 
@@ -21,11 +35,13 @@ class ButtonSetPosition
         `;
     }
 
-    // fixme а если active false передадут и класс active уже добавлен Исправь
+    // fixme а если active false передадут и класс active уже добавлен Исправь ok
     set active(active)
     {
         if (active === true) {
             this.$context.addClass('active');
+        } else {
+            this.$context.removeClass('active');
         }
     }
 

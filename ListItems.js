@@ -5,6 +5,10 @@ class ListItems {
     constructor($context)
     {
         this.$context = $context;
+
+        if (this.$context[0].ListItems) return;
+
+        this.$context[0].ListItems = this;
     }
 
     getWidthItem()

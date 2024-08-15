@@ -24,14 +24,14 @@ button {
   position: relative;
   overflow: hidden;
 }
-.b_carousel .pagination {
+.b_carousel .list_button_set_position {
   display: flex;
   position: absolute;
   bottom: 15px;
   width: 100%;
   justify-content: space-around;
 }
-.b_carousel .pagination .set_position {
+.b_carousel .list_button_set_position .set_position {
   min-width: 12px;
   height: 12px;
   background-color: black;
@@ -40,10 +40,10 @@ button {
   border: none;
   padding: 0;
 }
-.b_carousel .pagination .set_position:hover {
+.b_carousel .list_button_set_position .set_position:hover {
   opacity: unset;
 }
-.b_carousel .pagination .set_position:focus {
+.b_carousel .list_button_set_position .set_position:focus {
   opacity: unset;
 }
 .b_carousel .next, .b_carousel .previous {

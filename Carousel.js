@@ -9,42 +9,35 @@ class Carousel
     /** @type {ListButtonSetPosition} list_set_position */
     list_set_position;
 
-    /** @type {ListButtonMovePosition} list_move_position */
-    list_move_position;
-
     constructor($context)
     {
         this.$context = $context;
 
-        // fixme перенеси в метод build
-        this.$context.addClass('b_carousel');
+        if (this.$context[0].Carousel) return;
 
+        this.$context[0].Carousel = this;
+
+        // fixme перенеси в метод build ok
         this.build();
-
-        this.list_items = ListItems.create(this.$context);
 
         ButtonSetPosition.create(this.$context);
         ButtonMovePosition.create(this.$context);
 
-        // fixme не используется это свойство Удалить
-        this.list_move_position = ListButtonMovePosition.create(this.$context, this.list_items.getCountItems());
+        // fixme не используется это свойство Удалить ok
+        ListButtonMovePosition.create(this.$context);
 
         this.position = 0;
-
-        this.$context.on(ListButtonMovePosition.EVENT_UPDATE_CAROUSEL, () =>
-        {
-            this.position = this.$context.data('position');
-        });
-
-        this.list_set_position.offsetPosition();
     }
 
     build()
     {
+        this.$context.addClass('b_carousel');
+
         this.wrapItems();
 
+        this.list_items = ListItems.create(this.$context);
+
         this.buildSetPosition();
-        this.buildMovePosition();
     }
 
     wrapItems()
@@ -56,34 +49,40 @@ class Carousel
 
     buildSetPosition()
     {
-        // fixme не здесь это долно быть а в классе ListButtonSetPosition в методах create build
+        // fixme не здесь это долно быть а в классе ListButtonSetPosition в методах create build ok
         // а отсюда это нужно все убрать
-        this.$context.append(ListButtonSetPosition.getTemplatePaginate());
 
         this.list_set_position = ListButtonSetPosition.create(this.$context);
 
-        this.items.forEach((item, index) =>
-        {
-            this.list_set_position.build(index);
-        });
+        this.list_set_position.build(this.items);
     }
 
-    buildMovePosition()
+
+    getCountItems()
     {
-        // fixme убираем все это в класс ListButtonSetPosition по аналогии с описанным выше
-        this.$context.append(ButtonMovePosition.getTemplate());
-    }
+        this.list_items = ListItems.create(this.$context);
 
+        return this.list_items.getCountItems();
+    }
 
     set position(current_position)
     {
+        this.list_items = ListItems.create(this.$context);
+
         let position = -(current_position * parseInt(this.list_items.getWidthItem()));
 
         this.$context.find('.inner_carousel').css('left', position + 'px');
 
         this.$context.data('position', current_position);
 
-        this.list_set_position.changeActiveSetPosition(current_position);
+        this.list_set_position = ListButtonSetPosition.create(this.$context);
+
+        this.list_set_position.setActive(current_position);
+    }
+
+    get position()
+    {
+        return this.$context.data('position');
     }
 
 
@@ -91,7 +90,7 @@ class Carousel
      * @param {string} class_name
      * @return Carousel
      */
-    static create(class_name)
+    static create(class_name= '.b_carousel')
     {
         let $context = $(class_name);
 
