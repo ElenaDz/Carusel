@@ -6,6 +6,7 @@ class ButtonSetPosition
     /** @type {Carousel} carousel */
     carousel;
 
+
     constructor($context) {
         this.$context = $context;
 
@@ -23,10 +24,10 @@ class ButtonSetPosition
 
             button.active = true;
 
-            // fixme разботай через обращение к свойствам объектов на не dom ok
             this.carousel.position = active_position;
         });
     }
+
 
     static getTemplate(position)
     {
@@ -35,7 +36,7 @@ class ButtonSetPosition
         `;
     }
 
-    // fixme а если active false передадут и класс active уже добавлен Исправь ok
+
     set active(active)
     {
         if (active === true) {
@@ -45,10 +46,12 @@ class ButtonSetPosition
         }
     }
 
+
     get position()
     {
         return this.$context.data('position');
     }
+
 
     /**
      *

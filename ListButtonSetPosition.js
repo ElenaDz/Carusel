@@ -14,7 +14,6 @@ class ListButtonSetPosition
         ButtonSetPosition.create(this.$context);
     }
 
-    // fixme rename intiSetPosition ok
 
     build(items)
     {
@@ -24,19 +23,19 @@ class ListButtonSetPosition
         });
     }
 
-    // fixme rename setActive ok
+
     setActive(active_position = 0)
     {
         let buttons_set_position = ButtonSetPosition.create(this.$context);
 
+        // fixme сколько можно говорить что нужно строго следить за тем что Ide должна понимать все типы
+        // у тебя phpsrtorm понимает тип button_set_position? у меня нет
         buttons_set_position.forEach((button_set_position, index) =>
         {
             button_set_position.active = index === active_position;
         })
-        // fixme у нас есть обекты ButtonSetPosition с методами active их и нужн использовать ok
     }
 
-    // fixme rename resetActive ok
 
     static getTemplatePaginate()
     {
@@ -52,10 +51,6 @@ class ListButtonSetPosition
      */
     static create($context)
     {
-        // fixme не совпадают имя класса и css класс так не должно быть исправь css класс ok
-        // должно быть так класс ListButtonSetPosition css класс list_button_set_position
-        // у тебя почти все класслы нарушают это правило исправь плиз везде
-
         if ($context.find('.list_button_set_position').length === 0){
             $context.append(ListButtonSetPosition.getTemplatePaginate());
         }

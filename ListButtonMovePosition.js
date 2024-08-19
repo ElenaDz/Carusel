@@ -1,5 +1,6 @@
 
-class ListButtonMovePosition {
+class ListButtonMovePosition
+{
 
     /** @type {JQuery} $context */
     $context;
@@ -19,6 +20,7 @@ class ListButtonMovePosition {
     static create($context)
     {
         $context.append(ButtonMovePosition.getTemplate());
+
         return new ListButtonMovePosition($context.find('.list_button_move_position'));
     }
 }

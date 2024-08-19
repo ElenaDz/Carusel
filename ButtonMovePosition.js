@@ -6,7 +6,6 @@ class ButtonMovePosition
     /** @type {Carousel} carousel */
     carousel;
 
-    // fixme пишет ошибка "повторное объявление" и действительно такое имя уже занято ниже есть сеттер disable Удалить ok
 
     constructor($context) {
 
@@ -20,21 +19,20 @@ class ButtonMovePosition
 
         this.$context.on('click', (button) =>
         {
-            // fixme не вводи дополнительный дата атрибут ведь уже есть класс previous и next который можно исопльзовать ok
+            // fixme используй класс previous, data offset - удалить
             if ($(button.currentTarget).data('offset') === 'previous') {
-                // fixme здесь не нужно вызывать событие, здесь лучше напрямую обращаться к свойству position  ok
                 this.initMovePositionLeft();
+
             } else {
                 this.initMovePositionRight();
             }
         })
 
     }
+
+    // fixme не правильное имя метода, здесь не инициализация а смена позиции
     initMovePositionLeft()
     {
-        // fixme через parent() ты обращаешься к dom элементу а так нельзя мы должны работать с объектами, ok
-        // их свойствами и методами Когда объект создается мы его сложм в dom в констуркторе чтобы он не создался
-        // втрой раз и чтобы те кому можно взяли там его и обратились к нему Так и сделай Ниже тоже самое исправь
         let position = this.carousel.position;
 
         let button_next = this.getOppositeButton('.next').ButtonMovePosition;
@@ -50,7 +48,7 @@ class ButtonMovePosition
 
     }
 
-    // fixme rename initMovePositionRight ok
+    // fixme не правильное имя метода, здесь не инициализация а смена позиции
     initMovePositionRight()
     {
         let position = this.carousel.position;
@@ -59,8 +57,6 @@ class ButtonMovePosition
 
         button_prev.disable = false;
 
-        // fixme ты так долго передавала count_items ради это строчки? Так не пойдет У объекта Карусель должно быть ok
-        // свйство количество элементов вот и используй его
         if (position === this.carousel.getCountItems()) {
             this.disable = true;
             return;
@@ -79,6 +75,7 @@ class ButtonMovePosition
         `;
     }
 
+    // fixme вместо этого метода лучше заведи два метода getButtonNext и getButtonPrevious
     getOppositeButton(class_name)
     {
         return this.$context.siblings(class_name)[0];
