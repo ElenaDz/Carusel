@@ -9,8 +9,8 @@ class ButtonMovePosition
     /** @type {ListItems} list_items */
     list_items;
 
-    constructor($context) {
-
+    constructor($context)
+    {
         this.$context = $context;
 
         if (this.$context[0].ButtonMovePosition) return;
@@ -23,24 +23,23 @@ class ButtonMovePosition
 
         this.$context.on('click', (button) =>
         {
-            // fixme используй класс previous, data offset - удалить ok
             if ($(button.currentTarget).hasClass('previous')) {
-                this.offsetMovePositionLeft();
+                this.movePositionLeft();
 
             } else {
-                this.offsetMovePositionRight();
+                this.movePositionRight();
             }
         })
 
     }
 
-    // fixme не правильное имя метода, здесь не инициализация а смена позиции ok
-    offsetMovePositionLeft()
+
+    movePositionLeft()
     {
         let position = this.carousel.position;
 
         /**
-         * @var {ButtonMovePosition}  button_next
+         * @var {ButtonMovePosition} button_next
          */
         let button_next = this.getButtonNext()[0].ButtonMovePosition;
 
@@ -54,8 +53,7 @@ class ButtonMovePosition
         this.carousel.position = position - 1;
     }
 
-    // fixme не правильное имя метода, здесь не инициализация а смена позиции ok
-    offsetMovePositionRight()
+    movePositionRight()
     {
         let position = this.carousel.position;
 
@@ -74,6 +72,7 @@ class ButtonMovePosition
         this.carousel.position = position + 1;
     }
 
+
     static getTemplate()
     {
         return `
@@ -84,7 +83,6 @@ class ButtonMovePosition
         `;
     }
 
-    // fixme вместо этого метода лучше заведи два метода getButtonNext и getButtonPrevious ok
 
     getButtonNext()
     {

@@ -6,7 +6,7 @@ class Carousel
     /** @type {ListItems} list_items */
     list_items;
 
-    // fixme переименую свойство Имя объекта и свойства не совпадают ok
+    // fixme избавься от этого свойства Не нужно
     /** @type {ListButtonSetPosition} list_button_set_position */
     list_button_set_position;
 
@@ -34,16 +34,11 @@ class Carousel
         this.$context.children().wrapAll('<div class="inner_carousel"></div>');
 
         this.list_items = ListItems.create(this.$context);
-
-        // fixme карусель ни чего не знаешь про ListButtonSetPosition все что оно может делать это вызвать create все ok
-        // остальное ListButtonSetPosition должен делать сам, если ему для этого нужно items пусть обратиться к карусели
-        // и возьмет Перенеси эту строку в конструктор ListButtonSetPosition
     }
-    // fixme избавься от этого метода он только усложняет код а не упрощает ok
-    // fixme избавься от этого метода он только усложняет код а не упрощает ok
 
     set position(current_position)
     {
+        // fixme ты делаешь это в build здесь это делать не нужно
         this.list_items = ListItems.create(this.$context);
 
         let position = -(current_position * parseInt(this.list_items.getWidthItem()));
@@ -52,9 +47,10 @@ class Carousel
 
         this.$context.data('position', current_position);
 
-        // fixme зачем это если это делается в методе build который вызывается в конструкторе (убрала из build)
+        // fixme почему это не на строке 26 этого файла?
         this.list_button_set_position = ListButtonSetPosition.create(this.$context);
 
+        // fixme карусель не может управлять list_button_set_position сделай это через подписку на событие
         this.list_button_set_position.setActive(current_position);
     }
 

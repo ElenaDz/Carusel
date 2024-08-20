@@ -40,8 +40,6 @@ class ListButtonSetPosition
     {
         let buttons_set_position = ButtonSetPosition.create(this.$context);
 
-        // fixme сколько можно говорить что нужно строго следить за тем что Ide должна понимать все типы ok
-        // у тебя phpsrtorm понимает тип button_set_position? у меня нет ( у меня понимает, поэтому я не увидела проблему)
         buttons_set_position.forEach((/** ButtonSetPosition */ button_set_position, index) =>
         {
             button_set_position.active = index === active_position;
