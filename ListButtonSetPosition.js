@@ -3,6 +3,12 @@ class ListButtonSetPosition
     /** @type {JQuery} $context */
     $context;
 
+    /** @type {Carousel} carousel */
+    carousel;
+
+    /** @type {Item[]} items */
+    items;
+
     constructor($context)
     {
         this.$context = $context;
@@ -12,6 +18,12 @@ class ListButtonSetPosition
         this.$context[0].ListButtonSetPosition = this;
 
         ButtonSetPosition.create(this.$context);
+
+        this.carousel = Carousel.create();
+
+        this.items = Item.create(this.carousel.$context);
+
+        this.build(this.items)
     }
 
 
@@ -28,14 +40,13 @@ class ListButtonSetPosition
     {
         let buttons_set_position = ButtonSetPosition.create(this.$context);
 
-        // fixme сколько можно говорить что нужно строго следить за тем что Ide должна понимать все типы
-        // у тебя phpsrtorm понимает тип button_set_position? у меня нет
-        buttons_set_position.forEach((button_set_position, index) =>
+        // fixme сколько можно говорить что нужно строго следить за тем что Ide должна понимать все типы ok
+        // у тебя phpsrtorm понимает тип button_set_position? у меня нет ( у меня понимает, поэтому я не увидела проблему)
+        buttons_set_position.forEach((/** ButtonSetPosition */ button_set_position, index) =>
         {
             button_set_position.active = index === active_position;
         })
     }
-
 
     static getTemplatePaginate()
     {
@@ -43,7 +54,6 @@ class ListButtonSetPosition
             <div class="list_button_set_position"></div>
         `;
     }
-
 
     /**
      * @param {JQuery} $context

@@ -6,6 +6,8 @@ class ButtonMovePosition
     /** @type {Carousel} carousel */
     carousel;
 
+    /** @type {ListItems} list_items */
+    list_items;
 
     constructor($context) {
 
@@ -17,25 +19,30 @@ class ButtonMovePosition
 
         this.carousel = Carousel.create();
 
+        this.list_items = ListItems.create(this.carousel.$context);
+
         this.$context.on('click', (button) =>
         {
-            // fixme используй класс previous, data offset - удалить
-            if ($(button.currentTarget).data('offset') === 'previous') {
-                this.initMovePositionLeft();
+            // fixme используй класс previous, data offset - удалить ok
+            if ($(button.currentTarget).hasClass('previous')) {
+                this.offsetMovePositionLeft();
 
             } else {
-                this.initMovePositionRight();
+                this.offsetMovePositionRight();
             }
         })
 
     }
 
-    // fixme не правильное имя метода, здесь не инициализация а смена позиции
-    initMovePositionLeft()
+    // fixme не правильное имя метода, здесь не инициализация а смена позиции ok
+    offsetMovePositionLeft()
     {
         let position = this.carousel.position;
 
-        let button_next = this.getOppositeButton('.next').ButtonMovePosition;
+        /**
+         * @var {ButtonMovePosition}  button_next
+         */
+        let button_next = this.getButtonNext()[0].ButtonMovePosition;
 
         button_next.disable = false;
 
@@ -45,19 +52,21 @@ class ButtonMovePosition
         }
 
         this.carousel.position = position - 1;
-
     }
 
-    // fixme не правильное имя метода, здесь не инициализация а смена позиции
-    initMovePositionRight()
+    // fixme не правильное имя метода, здесь не инициализация а смена позиции ok
+    offsetMovePositionRight()
     {
         let position = this.carousel.position;
 
-        let button_prev = this.getOppositeButton('.previous').ButtonMovePosition;
+        /**
+         * @var {ButtonMovePosition}  button_prev
+         */
+        let button_prev = this.getButtonPrevious()[0].ButtonMovePosition;
 
         button_prev.disable = false;
 
-        if (position === this.carousel.getCountItems()) {
+        if (position === this.list_items.getCountItems()) {
             this.disable = true;
             return;
         }
@@ -69,18 +78,23 @@ class ButtonMovePosition
     {
         return `
             <div class="list_button_move_position">
-                <button class="move_position previous" data-offset="previous"> < </button>
-                <button class="move_position next" data-offset="next"> > </button>
+                <button class="move_position previous"> < </button>
+                <button class="move_position next"> > </button>
             </div>
         `;
     }
 
-    // fixme вместо этого метода лучше заведи два метода getButtonNext и getButtonPrevious
-    getOppositeButton(class_name)
+    // fixme вместо этого метода лучше заведи два метода getButtonNext и getButtonPrevious ok
+
+    getButtonNext()
     {
-        return this.$context.siblings(class_name)[0];
+        return this.$context.siblings('.next');
     }
 
+    getButtonPrevious()
+    {
+        return this.$context.siblings('.previous');
+    }
 
     /**
      *

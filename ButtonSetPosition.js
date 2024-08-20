@@ -6,7 +6,6 @@ class ButtonSetPosition
     /** @type {Carousel} carousel */
     carousel;
 
-
     constructor($context) {
         this.$context = $context;
 
@@ -28,14 +27,12 @@ class ButtonSetPosition
         });
     }
 
-
     static getTemplate(position)
     {
         return `
             <button class="set_position" data-position=${position}></button>
         `;
     }
-
 
     set active(active)
     {
@@ -46,12 +43,10 @@ class ButtonSetPosition
         }
     }
 
-
     get position()
     {
         return this.$context.data('position');
     }
-
 
     /**
      *
