@@ -10,7 +10,6 @@ class ListButtonSetPosition
     items;
 
 
-
     constructor($context)
     {
         this.$context = $context;

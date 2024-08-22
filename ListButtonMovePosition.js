@@ -1,7 +1,6 @@
 
 class ListButtonMovePosition
 {
-
     /** @type {JQuery} $context */
     $context;
 

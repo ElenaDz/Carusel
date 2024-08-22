@@ -6,7 +6,8 @@ class ButtonSetPosition
     /** @type {Carousel} carousel */
     carousel;
 
-    constructor($context) {
+    constructor($context)
+    {
         this.$context = $context;
 
         if (this.$context[0].ButtonSetPosition) return;
