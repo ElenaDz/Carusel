@@ -6,10 +6,10 @@ class Carousel
     /** @type {ListItems} list_items */
     list_items;
 
-    // fixme избавься от этого свойства Не нужно
-    /** @type {ListButtonSetPosition} list_button_set_position */
-    list_button_set_position;
+    // fixme избавься от этого свойства Не нужно ok
 
+
+    static EVENT_SET_POSITION = 'Carousel.EVENT_SET_POSITION';
     constructor($context)
     {
         this.$context = $context;
@@ -23,6 +23,7 @@ class Carousel
         ButtonSetPosition.create(this.$context);
         ButtonMovePosition.create(this.$context);
         ListButtonMovePosition.create(this.$context);
+        ListButtonSetPosition.create(this.$context);
 
         this.position = 0;
     }
@@ -38,20 +39,19 @@ class Carousel
 
     set position(current_position)
     {
-        // fixme ты делаешь это в build здесь это делать не нужно
-        this.list_items = ListItems.create(this.$context);
+        // fixme ты делаешь это в build здесь это делать не нужно ok
 
-        let position = -(current_position * parseInt(this.list_items.getWidthItem()));
+        let position = -(current_position * parseInt(this.$context[0].Carousel.list_items.getWidthItem()));
 
         this.$context.find('.inner_carousel').css('left', position + 'px');
 
         this.$context.data('position', current_position);
 
-        // fixme почему это не на строке 26 этого файла?
-        this.list_button_set_position = ListButtonSetPosition.create(this.$context);
+        this.$context.trigger(Carousel.EVENT_SET_POSITION);
 
-        // fixme карусель не может управлять list_button_set_position сделай это через подписку на событие
-        this.list_button_set_position.setActive(current_position);
+        // fixme почему это не на строке 26 этого файла? ok
+
+        // fixme карусель не может управлять list_button_set_position сделай это через подписку на событие ok
     }
 
     get position()

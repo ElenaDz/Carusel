@@ -9,6 +9,8 @@ class ListButtonSetPosition
     /** @type {Item[]} items */
     items;
 
+
+
     constructor($context)
     {
         this.$context = $context;
@@ -23,7 +25,12 @@ class ListButtonSetPosition
 
         this.items = Item.create(this.carousel.$context);
 
-        this.build(this.items)
+        this.build(this.items);
+
+        this.carousel.$context.on(Carousel.EVENT_SET_POSITION, (event) =>
+        {
+            this.setActive(this.carousel.position);
+        })
     }
 
 
