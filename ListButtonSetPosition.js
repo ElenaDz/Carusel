@@ -26,7 +26,7 @@ class ListButtonSetPosition
 
         this.build(this.items);
 
-        this.carousel.$context.on(Carousel.EVENT_SET_POSITION, (event) =>
+        this.carousel.$context.on(Carousel.EVENT_SET_POSITION, () =>
         {
             this.setActive(this.carousel.position);
         })

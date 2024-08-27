@@ -51,7 +51,7 @@ class ButtonSetPosition
 
     /**
      *
-     * @param {jQuery} $context
+     * @param {JQuery} $context
      * @returns {ButtonSetPosition[]}
      */
     static create($context) {
