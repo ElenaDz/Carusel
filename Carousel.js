@@ -8,7 +8,6 @@ class Carousel
 
     static EVENT_SET_POSITION = 'Carousel.EVENT_SET_POSITION';
 
-
     constructor($context)
     {
         this.$context = $context;
@@ -58,6 +57,7 @@ class Carousel
      */
     static create(class_name= '.b_carousel')
     {
+        // fixme test
         let $context = $(class_name);
 
         return new Carousel($context);
